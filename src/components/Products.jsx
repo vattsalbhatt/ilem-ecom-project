@@ -65,8 +65,18 @@ export default function Products({ props }) {
         }
       })
       dispatch(setFetchedProducts(updatedProductRes))
+    } else {
+      const updatedFetchedProducts = fetchedProducts.map((product) => {
+        const foundProduct = checkoutObj.products.find(
+          (p) => p._id === product._id,
+        )
+        return foundProduct
+          ? { ...product, addedQuantity: foundProduct.addedQuantity || 0 }
+          : product
+      })
+      dispatch(setFetchedProducts(updatedFetchedProducts))
     }
-  }, [latestProducts, fetchedProducts])
+  }, [latestProducts, products])
 
   const incrementQuantity = (_id) => {
     let updatedFetchedProducts = fetchedProducts.map((product) => {
