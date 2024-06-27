@@ -22,7 +22,9 @@ function Navbar() {
           >
             Add Product
           </h1>
-          <h1 className="font-600 text-f16 cursor-pointer">
+          <h1 className="font-600 text-f16 cursor-pointer"
+          onClick={()=> router.push('/cart')}
+          >
             Cart Items {products.length}
           </h1>
         </div>

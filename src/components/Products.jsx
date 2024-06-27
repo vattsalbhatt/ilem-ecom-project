@@ -18,21 +18,31 @@ const SingleProduct = ({ product, incrementQuantity, decrementQuantity }) => {
           {`₹${mrp}`}
         </h3>
       </div>
-      {addedQuantity>0 ? <div className="border border-gray-300 w-[90%] mx-auto h-10 rounded-lg flex justify-between items-center mt-4">
+      {addedQuantity > 0 ? (
+        <div className="border border-gray-300 w-[90%] mx-auto h-10 rounded-lg flex justify-between items-center mt-4">
+          <button
+            className="w-10 h-10 bg-gray-400 rounded-lg font-700"
+            onClick={() => decrementQuantity(_id)}
+          >
+            -
+          </button>
+          <h3 className="text-f16 font-600">{addedQuantity}</h3>
+          <button
+            className="w-10 h-10 bg-gray-400 rounded-lg font-700"
+            onClick={() => incrementQuantity(_id)}
+          >
+            +
+          </button>
+        </div>
+      ) : (
         <button
-          className="w-10 h-10 bg-gray-400 rounded-lg font-700"
-          onClick={() => decrementQuantity(_id)}
-        >
-          -
-        </button>
-        <h3 className="text-f16 font-600">{addedQuantity}</h3>
-        <button
-          className="w-10 h-10 bg-gray-400 rounded-lg font-700"
           onClick={() => incrementQuantity(_id)}
+          className="border shadow-sm bg-gray-300 w-[90%] mx-auto h-10 rounded-lg  mt-4 text-center font-600"
         >
-          +
+          {' '}
+          Add to Cart
         </button>
-      </div> : <button onClick={() => incrementQuantity(_id)} className="border shadow-sm bg-gray-300 w-[90%] mx-auto h-10 rounded-lg  mt-4 text-center font-600"> Add to Cart</button>}
+      )}
     </div>
   )
 }
@@ -44,15 +54,19 @@ export default function Products({ props }) {
     (state) => state.checkoutReducer,
   )
 
+  const { products } = checkoutObj
+
   useEffect(() => {
-    const updatedProductRes = latestProducts.map((product) => {
-      return {
-        ...product,
-        addedQuantity: 0,
-      }
-    })
-    dispatch(setFetchedProducts([...updatedProductRes]))
-  }, [])
+    if (fetchedProducts.length === 0) {
+      const updatedProductRes = latestProducts.map((product) => {
+        return {
+          ...product,
+          addedQuantity: 0,
+        }
+      })
+      dispatch(setFetchedProducts(updatedProductRes))
+    }
+  }, [latestProducts, fetchedProducts])
 
   const incrementQuantity = (_id) => {
     let updatedFetchedProducts = fetchedProducts.map((product) => {
