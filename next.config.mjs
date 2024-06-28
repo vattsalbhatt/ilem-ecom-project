@@ -17,6 +17,9 @@ const nextConfig = {
     'rc-tree',
     'rc-table',
   ],
+  images: {
+    domains: ['res.cloudinary.com']
+  }
 }
 
 export default nextConfig

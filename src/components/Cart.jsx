@@ -4,6 +4,7 @@ import { message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ButtonLoading from './Assets/ButtonLoading'
+import Image from 'next/image'
 
 const SingleCartProduct = ({
   product,
@@ -15,7 +16,9 @@ const SingleCartProduct = ({
   return (
     <div className="w-[90vw] max-w-[400px] bg-slate-100 h-[140px] rounded-lg flex">
       <div className="h-full w-[30%]">
-        <img
+        <Image
+         width={'100'}
+         height={100}
           className="w-full h-full object-cover rounded-lg"
           src={imageUrl}
           alt="image"

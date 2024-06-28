@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar'
 import SearchBar from '@/components/SearchBar'
 import { commonApiCall } from '@/configs/apiCall'
+import Image from 'next/image'
 
 export default function SingleProductPage({ productInfo }) {
   const { imageUrl, title, sellingPrice, mrp } = productInfo
@@ -10,8 +11,10 @@ export default function SingleProductPage({ productInfo }) {
       <SearchBar />
       <div>
         <div className="h-[300px] w-[170px] md:w-[250px] border border-gray-400 rounded-lg flex flex-col gap-2 mt-4">
-          <img
-            className="h-[50%] object-cover"
+          <Image
+            className="h-[50%] w-full object-cover"
+            width={100}
+            height={100}
             src={
               imageUrl
                 ? imageUrl

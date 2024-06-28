@@ -1,4 +1,5 @@
 import { setCheckoutObj, setFetchedProducts } from '@/redux/features/checkout'
+import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -6,8 +7,10 @@ const SingleProduct = ({ product, incrementQuantity, decrementQuantity }) => {
   const { _id, title, addedQuantity, mrp, sellingPrice, imageUrl } = product
   return (
     <div className="min-h-[300px] w-[170px] md:w-[250px] border border-gray-400 rounded-lg flex flex-col gap-2 mt-4">
-      <img
-        className="h-[150px] object-cover"
+      <Image
+        className="h-[150px] w-full object-cover"
+        width={'100'}
+        height={100}
         src={
           imageUrl
             ? imageUrl
