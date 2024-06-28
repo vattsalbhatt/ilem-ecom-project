@@ -1,5 +1,6 @@
 // next.config.js
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   reactStrictMode: true,
   env: {
@@ -18,8 +19,16 @@ const nextConfig = {
     'rc-table',
   ],
   images: {
-    domains: ['res.cloudinary.com']
-  }
+    domains: ['res.cloudinary.com'],
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://mp-service.ap-south-1.elasticbeanstalk.com/api/:path*',
+      },
+    ];
+  },
 }
 
-export default nextConfig
+export default nextConfig;
