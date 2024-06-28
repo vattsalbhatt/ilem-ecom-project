@@ -10,20 +10,21 @@ function Navbar() {
     <nav className="w-full h-14 bg-slate-100">
       <div className="w-[90%] mx-auto flex justify-between items-center  h-full">
         <h1
-          className="font-700 text-f18 cursor-pointer"
+          className="font-700 text-f16 lg:text-f18 cursor-pointer"
           onClick={() => router.push('/')}
         >
           Shopping Mart
         </h1>
         <div className="flex gap-4">
           <h1
-            className="font-400 text-f16 cursor-pointer"
+            className="font-400 text-f16 cursor-pointer text-blue-600"
             onClick={() => router.push('/add_product')}
           >
             Add Product
           </h1>
-          <h1 className="font-600 text-f16 cursor-pointer"
-          onClick={()=> router.push('/cart')}
+          <h1
+            className="font-600 text-f16 cursor-pointer"
+            onClick={() => router.push('/cart')}
           >
             Cart Items {products.length}
           </h1>

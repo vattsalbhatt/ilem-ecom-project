@@ -1,6 +1,6 @@
 import { commonApiCall } from '@/configs/apiCall'
 import { setCheckoutObj, setFetchedProducts } from '@/redux/features/checkout'
-import { Button, message } from 'antd'
+import { message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ButtonLoading from './Assets/ButtonLoading'
@@ -11,19 +11,19 @@ const SingleCartProduct = ({
   incrementQuantity,
   decrementQuantity,
 }) => {
-  const { _id, name, addedQuantity, mrp, sellingPrice } = product
+  const { _id, title, addedQuantity, mrp, sellingPrice, imageUrl } = product
   return (
-    <div className="w-[400px] bg-slate-100 h-[140px] rounded-lg flex">
+    <div className="w-[90vw] max-w-[400px] bg-slate-100 h-[140px] rounded-lg flex">
       <div className="h-full w-[30%]">
         <img
           className="w-full h-full object-cover rounded-lg"
-          src="https://res.cloudinary.com/dksw3p9mg/image/upload/v1711045256/cld-sample-5.webp"
-          alt=""
+          src={imageUrl}
+          alt="image"
         />
       </div>
-      <div className="h-full w-[70%] flex flex-col relative ml-2 ">
-        <h1 className="ml-2 font-600 text-f18">{name}</h1>
-        <h2 className="ml-2 font-700 text-f22">{`₹${sellingPrice}`}</h2>
+      <div className="h-full w-[70%] flex flex-col relative ml-2  mt-2">
+        <h1 className="ml-2 font-600 text-f18">{title}</h1>
+        <h2 className="ml-2 font-600 text-f22">{`₹${sellingPrice}`}</h2>
         <h3 className="ml-2 font-600 text-f14 line-through text-gray-400">
           {`₹${mrp}`}
         </h3>
@@ -42,7 +42,7 @@ const SingleCartProduct = ({
             +
           </button>
         </div>
-        <div className="absolute right-5 bottom-2">
+        <div className="absolute right-5 bottom-4 font-700 text-f22 text-amber-900">
           {`₹${addedQuantity * sellingPrice}`}
         </div>
         <p
@@ -106,9 +106,8 @@ function Cart() {
       return product
     })
 
-    let updatedCheckoutProducts = [...checkoutObj.products] // Clone checkoutProducts array
+    let updatedCheckoutProducts = [...checkoutObj.products]
 
-    // Check if the product already exists in checkoutProducts
     const existingProductIndex = updatedCheckoutProducts.findIndex(
       (product) => product['_id'] === _id,
     )
@@ -183,21 +182,18 @@ function Cart() {
     const checkout = await commonApiCall('/checkout/createCheckout', 'post', {
       userId: '665725c93619dff2ce6a38a2',
       products: products,
-      amount: total*100,
+      amount: total * 100,
     })
-    if(checkout){
+    if (checkout) {
       handlePayment(checkout)
     }
-
-
-   
   }
 
   // handlePayment Function
   const handlePayment = async (checkout) => {
     try {
       const data = await commonApiCall(`/payment/createOrder`, 'post', {
-        amount: total*100,
+        amount: total * 100,
       })
 
       const processAndVerifyPayload = {
@@ -275,32 +271,30 @@ function Cart() {
           )}
         </div>
 
-        {
-
-          products.length > 0 && <> <div className="text-right font-500 text-f18">
-          <h2>
-            Total Items:{' '}
-            <span className="text-f24 font-700"> {products.length}</span>
-          </h2>
-          <h1>
-            Final Total:{' '}
-            <span className="text-f24 font-700"> {`₹${total}`}</span>
-          </h1>
-        </div>
-        <div>
-          <ButtonLoading
-            classes="bg-yellow-300 w-[300px] h-10 font-700 rounded-lg"
-            callback={handlePayNow}
-            isLoading={isLoading}
-          >
-            Pay Now
-          </ButtonLoading>
-        </div>
-        </>
-        }
-
-       
-
+        {products.length > 0 && (
+          <>
+            {' '}
+            <div className="text-right font-500 text-f18">
+              <h2>
+                Total Items:{' '}
+                <span className="text-f24 font-700"> {products.length}</span>
+              </h2>
+              <h1>
+                Final Total:{' '}
+                <span className="text-f24 font-700"> {`₹${total}`}</span>
+              </h1>
+            </div>
+            <div className="mb-10">
+              <ButtonLoading
+                classes="bg-yellow-300 w-[300px] h-10 font-700 rounded-lg"
+                callback={handlePayNow}
+                isLoading={isLoading}
+              >
+                Pay Now
+              </ButtonLoading>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

@@ -5,9 +5,7 @@ import AddProduct from '@/components/AddProduct'
 
 export default function AddProductPage() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between pt-2`}
-    >
+    <main className={`flex min-h-screen flex-col`}>
       <Navbar />
       <AddProduct />
     </main>
